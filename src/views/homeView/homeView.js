@@ -121,6 +121,7 @@ export default function HomeView(props) {
                 return <InfoView ></InfoView>
             case 1:
             case 2:
+                return <AdminView setVal={setVal} actualUser={actualUser}></AdminView>
             case 4:
             case 5:
                 return <ProfileView setVal={setVal} actualUser={actualUser} setActualUser={setActualUser} />;

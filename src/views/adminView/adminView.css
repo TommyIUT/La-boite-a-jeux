@@ -1,44 +1,21 @@
-.adminView {
+.adminView{
     width: 75%;
     margin: auto;
-    padding: 20px;
-    border: 2px solid rgb(255, 255, 255, 0.5);
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(20px);
+    padding: 10px;
     background: transparent;
     color: white;
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(to right, #002663, #4C5CC5);
 }
 
-.adminView .updateBtn {
-    background: none;
-    border: solid white 2px;
-    outline: none;
-    height: 49px;
-    border-radius: 49px;
-    color: #fff;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin: 10px 0;
-    padding: 0px 20px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: 0.5s;
-}
-
-.adminView .updateBtn:hover {
-    background: #002663;
-}
-
-.adminView .active {
-    background-color: #002663;
-    /* Autres styles souhaités pour le bouton actif */
-}
-.adminView .error {
-    color: #FA14FF;
+.adminView h1{
+    background: #eb6534;
+    width: 100%;
+    border: 2px solid rgb(255, 255, 255, 0.5);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+    padding: 20px;
 }
