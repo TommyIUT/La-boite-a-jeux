@@ -1,0 +1,39 @@
+.infoView .custom-tab-list {
+    margin: 2% 0%;
+}
+
+/**************************** Début pour gérer les Tab ****************************/
+.infoView .custom-tab-list {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    gap: 5%;
+    margin: 5% auto;
+    padding: 0px;
+}
+
+.infoView .custom-tab {
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2px solid #EB6534;
+    color: black;
+}
+
+.infoView .custom-tab.react-tabs__tab--selected {
+    background: #EB6534;
+    color: white;
+    border: none;
+}
+
+@media screen and (max-width: 495px) {
+    .infoView .custom-tab-list {
+        display: flex;
+        list-style-type: none;
+        gap: 10px;
+        margin: 5% auto;
+        padding: 0px;
+        flex-direction: column;
+        width: fit-content;
+    }
+}

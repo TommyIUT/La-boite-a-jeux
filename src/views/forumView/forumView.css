@@ -1,0 +1,16 @@
+.forumView {
+    width: 90vw;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1%;
+}
+
+@media screen and (max-width: 1250px) {
+    .forumView {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 50px;
+    }
+}

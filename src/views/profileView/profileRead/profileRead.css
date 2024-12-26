@@ -1,0 +1,86 @@
+.profileRead {
+    width: 70%;
+}
+
+.profileRead .btnadmin {
+    background: none;
+    border: solid black 2px;
+    outline: none;
+    height: 49px;
+    border-radius: 49px;
+    color: black;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 10px 0;
+    padding: 0px 20px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.5s;
+    position: absolute;
+    left: 5%;
+}
+
+.profileRead .btnadmin:hover {
+    background: #002663;
+}
+
+.profileRead .boxs {
+    display: flex;
+    margin: 7% 0%;
+    justify-content: space-between;
+}
+
+.profileRead .boxInfo {
+    border: 1px solid black;
+    border-radius: 15px;
+    width: 45%;
+    margin-left: 25%;
+}
+
+
+.profileRead .boxInfo .info{
+    text-align: left;
+    padding-left: 20px;
+}
+  
+@media screen and (max-width: 1300px) {
+    .profileRead .boxs {
+        display: flex;
+        justify-content: center;
+        gap: 100px;
+        width: 600px;
+    }
+
+    .profileRead .boxInfo {
+        margin-left: 0%;
+    }
+    
+}
+
+@media screen and (max-width: 1120px) {
+    .profileRead .boxs {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        width: 600px;
+    }
+}
+
+@media screen and (max-width: 1020px) {
+    .profileRead .boxs {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+        width: 100vw;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .profileRead {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 50px;
+    }
+}

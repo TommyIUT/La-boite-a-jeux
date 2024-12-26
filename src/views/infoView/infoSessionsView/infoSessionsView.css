@@ -1,0 +1,32 @@
+.infoSessionsView {
+    width: 50%;
+    margin: 3% auto;
+    border: 2px solid rgb(0, 0, 0, 0.5);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+    background: #F2D0A4;
+    color: black;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column; 
+}
+
+@media screen and (max-width: 825px) {
+    .infoSessionsView .allGames .gamesBox .texts {
+        margin-left: 50px; 
+    }
+}
+ 
+@media screen and (max-width: 720px) {
+    .infoSessionsView .allGames .gamesBox .texts {
+        margin-left: 20px; 
+    }
+
+    .infoSessionsView .allGames .gamesBox .infoGen {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}

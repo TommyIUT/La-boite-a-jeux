@@ -1,0 +1,171 @@
+@font-face {
+    font-family: "Inter Thin";
+    src: url('../../fonts/Inter_24pt-Regular.ttf') format('truetype');
+    font-weight: 300; /* poids de la police */
+    font-style: normal;
+}
+
+.navBar .navigation {
+    padding: 3vh 4vw;
+    display: flex;
+    align-items: center;
+    font-family: "Inter Thin", sans-serif;
+}
+
+.navBar .navigation .current{
+    position: relative;
+    font-size: 1.4em;
+    color: #EB6534;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 4vw;
+    height: min-content;
+}
+
+#nav-menu-button {
+    position: relative;
+    padding: 3vh 4vw;
+    font-size: 1.4em;
+    color: #191919;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 4vw;
+    height: min-content;
+}
+
+.navBar .navigation .monprofil{
+    position: relative;
+    left: 44vw;
+    margin-right: 4vw;
+    font-size: 1.4em;
+    color: #EB6534;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navBar .navigation .current::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    color: #191919;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: black;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+.navBar .navigation .current:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.navBar .navigation .current:hover {
+    color:black;
+}
+
+.navBar .navigation .monprofil:hover {
+    /*color:rgb(0, 38, 99);*/
+    color: black;
+}
+
+.navBar .navigation .monprofil::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: black;
+    border-radius: 5px;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+.navBar .navigation .notification::after {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #FA14FF;
+    border-radius: 50%;
+    margin-bottom: 8px;
+  }
+
+.navBar .navigation .logo{
+    height: 10vh;
+    position:initial;
+}
+
+.navBar .navigation .monprofil:hover::after {
+    transform-origin: right;
+    transform: scaleX(1);
+}
+
+
+/*Affichage mobile*/
+@media screen and (max-width: 700px) {
+    .navBar .navigation .btnLogin-popup {
+        margin-left: 120px;
+    }
+
+    .navBar .navigation{
+        display: none;
+    }
+}
+
+/*Affichage PC*/
+@media screen and (min-width: 701px) {
+    #nav-menu-button {
+        display: none;
+      }
+    
+    }
+
+@media screen and (max-width: 1450px) {
+    .navBar .navigation .monprofil{
+        margin-right: 4vw;
+        font-size: 1.2em;
+    }
+
+    .navBar .navigation .current{
+        margin-left: 1.5vw;
+        font-size: 1.2em;
+    }
+    
+}
+
+@media screen and (max-width: 1050px) {
+    .navBar .navigation .monprofil{
+        margin-right: 4vw;
+        font-size: 0.8em;
+    }
+
+    .navBar .navigation .current{
+        margin-left: 1vw;
+        font-size: 0.8em;
+    }
+    
+}
+
+@media screen and (max-width: 710px) {
+    .navBar .navigation {
+        display: flex;
+        flex-direction: column;
+        .monprofil{
+            margin-right: 45vw;  
+        }  
+    }
+    
+
+    /*.navBar .navigation .current{
+        margin-left: 1vw;
+        font-size: 0.8em;
+    }*/
+    
+}

@@ -1,0 +1,72 @@
+@font-face {
+  font-family: "tahoma";
+  src: url('fonts/tahoma.ttf') format('truetype');
+  font-weight: 300; /* poids de la police */
+  font-style: normal;
+}
+
+.App {
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    /*background-color: #4C5CC5;
+    background-color: #002663;*/
+    background: #FFECCC;
+    overflow: hidden;
+    overflow-y: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 15px; /* Largeur de la barre de défilement */
+}
+
+::-webkit-scrollbar-thumb {
+background: #4C5CC5; /* Couleur de la poignée de la barre de défilement */
+border-radius: 6px; /* Bord arrondi de la poignée */
+}
+
+::-webkit-scrollbar-track {
+background: #002663; /* Couleur de fond de la barre de défilement */
+border-radius: 6px; /* Bord arrondi de la piste de la barre de défilement */
+}
+
+::-webkit-scrollbar-thumb:hover{
+background : blueviolet;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

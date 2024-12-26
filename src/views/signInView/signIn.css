@@ -1,0 +1,148 @@
+.signIn {
+    display: flex;
+    min-height: 100vh;
+    background: #f2d0a4;
+    color: #fff;
+  }
+  
+  .signIn .left-panel {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 2rem;
+    background: #fff;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+  }
+  
+  .signIn .left-panel .title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #eb6534;
+    margin-bottom: 1rem;
+  }
+  
+  .signIn .left-panel .signin-form {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .signIn .input-field {
+    width: 100%;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    padding: 0.8rem 1.2rem;
+    background: #f9f9f9;
+    transition: border-color 0.3s;
+  }
+  
+  .signIn .input-field input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #333;
+  }
+  
+  .signIn .input-field input::placeholder {
+    color: #aaa;
+    font-weight: 300;
+  }
+  
+  .signIn .input-field:focus-within {
+    border-color: #eb6534;
+  }
+  
+  .signIn .btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: #eb6534;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+  
+  .signIn .btn:hover {
+    background: #f2d0a4;
+  }
+  
+  .signIn .right-panel {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .signIn .right-panel h3 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+  }
+  
+  .signIn .right-panel .btn {
+    width: auto;
+    padding: 0.7rem 2rem;
+    background: #fff;
+    color: #eb6534;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .signIn .right-panel .btn:hover {
+    background: #eb6534;
+    color: #fff;
+  }
+  
+  .logo-image {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  .right-panel img {
+    max-width: 300px;
+    margin-bottom: 10px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .signIn {
+      flex-direction: column;
+    }
+  
+    .signIn .left-panel {
+      width: 100%;
+      border-radius: 0;
+      padding: 2rem;
+    }
+  
+    .signIn .right-panel {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+  

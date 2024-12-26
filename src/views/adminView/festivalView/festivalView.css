@@ -1,0 +1,119 @@
+.festivalView form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.festivalView{
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    display: flex;
+}
+
+.festivalView .rowdate{
+    display: flex;
+    flex-direction: row;
+    padding: 5px 0px;
+    margin: auto;
+}
+
+.festivalView .row{
+    display: flex;
+    text-align: left;
+    padding: 5px 0px;
+    flex-direction: row;
+    width: 100%;
+    
+}
+
+.festivalView .column{
+    display: flex;
+    text-align: left;
+    flex-direction: column;
+    align-items: left;
+    margin-top: 10px;
+    padding: 10px;
+    height: 100%;
+}
+
+.festivalView .newposte{
+    padding: auto;
+    margin-bottom: 10px;
+    width: 55vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 20px;
+    background-color: #032151;
+}
+
+.festivalView .inputfile{
+    width: 25vw;
+    align-items: center;
+    text-align: center;
+}
+
+
+.festivalView input{
+    border: none;
+    text-align: left;
+    align-items: right;
+    border-radius: 5px;
+    padding: 5px 00px 5px 10px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.festivalView .input{
+    width: 100px
+}
+
+.festivalView .acti{
+    width: 14vw;
+}
+
+.festivalView .right{
+    margin-left: 2vw;
+    align-items: center;
+    display: contents;
+    width: 8vw;
+    position: fixed;
+}
+
+.festivalView .left{
+    margin-left: 1vw;
+    align-items: center;
+    width: 45%;
+}
+
+.festivalView .capa{
+    width: 46%;
+}
+
+.festivalView .btn{
+    font-weight: 400;
+    font-size: 2em;
+}
+
+.festivalView select{
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+    width: 50%;
+    margin-left : 10px;
+    font-weight: 400;
+    font-size: 1em;
+}
+
+.festivalView .middle{
+    margin-left: 1vw;
+    align-items: center;
+    width: 33%;
+}
+
+.festivalView .desc{
+    width: 66%;
+}

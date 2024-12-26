@@ -1,0 +1,89 @@
+.profileForm {
+    width: 70%;
+}
+
+.profileForm .boxs {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 100px;
+    width: 600px;
+}
+
+.profileForm .boxInfo {
+    border: 1px solid black;
+    border-radius: 15px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 15px;
+    margin-left: 25%;
+}
+
+
+.profileForm .boxInfo .info{
+    text-align: left;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.profileForm .boxInfo .info input {
+    width: 150px;
+    border: 1px solid black;
+}
+
+.profileForm .boxInfo .info select {
+    background: white;
+    width: 154px;
+    border: 1px solid black;
+    color: black;
+}
+
+@media screen and (max-width: 1465px) {
+    .profileForm .boxs {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 100px;
+        width: 600px;
+    }
+    .profileForm .boxInfo {
+        width: 50vw;
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 1125px) {
+    .profileForm .boxs {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 50px;
+    }
+    .profileForm .boxInfo {
+        width: 50vw;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    .profileForm .boxs {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 50px;
+        width: 200px;
+    }
+    .profileForm .boxInfo {
+        width: 50vw;
+    }
+
+    .profileForm .boxInfo .info input {
+        width: 100px;
+    }
+
+    .profileForm .boxInfo .info select {
+        width: 100px;
+    }
+}
