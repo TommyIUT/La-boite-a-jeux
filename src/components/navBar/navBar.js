@@ -67,7 +67,10 @@ export default function NavBar({ actualUser, setVal }) {
                       }
                   </>
               ) : (
-                  <p className='current'>Veuillez attendre l'approbation d'un administrateur pour utiliser cette application</p>
+                <div className='approb'>
+                  <p >Veuillez attendre l'approbation d'un administrateur </p>
+                  <p > pour utiliser cette application</p>
+                </div>
               )}
               <NavLink className="monprofil" to='/' onClick={() => setVal(5)}>Mon Profil</NavLink>
               <IconButton 

@@ -1,4 +1,4 @@
-.adminView{
+.adminView {
     width: 75%;
     margin: auto;
     padding: 10px;
@@ -10,12 +10,51 @@
     flex-direction: column;
 }
 
-.adminView h1{
+.adminView h1 {
     background: #eb6534;
     width: 100%;
-    border: 2px solid rgb(255, 255, 255, 0.5);
+    border: 2px solid rgb(255, 255, 255, 1);
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(20px);
     padding: 20px;
+    margin-bottom: 20px; /* Ajoutez un peu d'espace entre le titre et la liste */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.adminView .user-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre les éléments horizontalement */
+}
+
+.adminView .user {
+    width: 100%;
+    background: white;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+    padding: 20px;
+    margin-bottom: 10px; /* Ajoutez un peu d'espace entre les éléments */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #eb6534;
+}
+
+.adminView .user-info {
+    text-align: left;
+    margin-left: 5%;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.adminView .user-actions {
+    display: flex;
+    gap: 10px; /* Espace entre les boutons */
+    margin-right: 5%;
 }

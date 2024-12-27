@@ -22,6 +22,10 @@
     height: min-content;
 }
 
+.navBar .navigation .approb{
+    color: #EB6534;
+}
+
 #nav-menu-button {
     position: relative;
     padding: 3vh 4vw;
