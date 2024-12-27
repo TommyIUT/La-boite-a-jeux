@@ -6,6 +6,7 @@ import InfoView from '../infoView/infoView';
 import ProfileView from '../profileView/profileView';
 import AdminView from '../adminView/adminView';
 import SessionsView from '../sessionsView/sessionsView';
+import VendeursView from '../vendeursView/vendeursView';
 
 import NavBar from '../../components/navBar/navBar';
 
@@ -13,63 +14,10 @@ import './homeView.css';
 
 export default function HomeView(props) {
     const [val, setVal] = useState(0);
-    const [users, setUsers] = useState([]);
-    const [vendeurs, setVendeurs] = useState([]);
-    const [sessions, setSessions] = useState([]);
-    const [depots, setDepots] = useState([]);
-    const [countUsers, setCountUsers] = useState(0);
     const [actualUser, setActualUser] = useState(null);
     const [loadingUser, setLoadingUser] = useState(true);
 
-    useEffect(() => {
-        const fetchUsersData = async () => {
-            try {
-                const querySnapshot = await getDocs(collection(db, "users"));
-                const listUsers = querySnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setUsers(listUsers);
-            } catch (error) {
-                console.error("Error fetching users data:", error);
-            }
-        };
-        fetchUsersData();
-    }, []);
-
-    useEffect(() => {
-        const fetchDepotData = async () => {
-            try {
-                const querySnapshot = await getDocs(collection(db, "depot"));
-                const listDepots = querySnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setDepots(listDepots);
-            } catch (error) {
-                console.error("Error fetching depots data:", error);
-            }
-        };
-        fetchDepotData();
-    }, []);
-
     
-
-    useEffect(() => {
-        const fetchVendeursData = async () => {
-            try {
-                const querySnapshot = await getDocs(collection(db, "vendeurs"));
-                const listVendeurs = querySnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setVendeurs(listVendeurs);
-            } catch (error) {
-                console.error("Error fetching customer data:", error);
-            }
-        };
-        fetchVendeursData();
-    }, []);
 
     useEffect(() => {
         const getUserData = auth.onAuthStateChanged(async (user) => {
@@ -94,20 +42,6 @@ export default function HomeView(props) {
         return () => getUserData();
     }, []);
 
-
-    useEffect(() => {
-        const fetchUsersCount = async () => {
-            try {
-                const coll = collection(db, "users");
-                const snapshot = await getCountFromServer(coll);
-                setCountUsers(snapshot.data().count);
-            } catch (error) {
-                console.error("Erreur lors de la récupération du nombre d'utilisateurs :", error);
-            }
-        };
-        fetchUsersCount();
-    }, []);
-
     const renderView = () => {
         if (loadingUser) {
             return <p>Chargement des données...</p>;
@@ -125,16 +59,14 @@ export default function HomeView(props) {
             case 2:
                 return <AdminView setVal={setVal} actualUser={actualUser}></AdminView>
             case 4:
+                return <VendeursView setVal={setVal} actualUser={actualUser}></VendeursView>
             case 5:
                 return <ProfileView setVal={setVal} actualUser={actualUser} setActualUser={setActualUser} />;
             case 6:
                 return <AdminView setVal={setVal} />;
             default:
                 return (
-                    <InfoView 
-                        countUsers={countUsers} 
-                        users={users} 
-                    />
+                    <InfoView ></InfoView>
                 );
         }
     };
