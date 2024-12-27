@@ -5,6 +5,7 @@ import { db, auth } from '../../firebase';
 import InfoView from '../infoView/infoView';
 import ProfileView from '../profileView/profileView';
 import AdminView from '../adminView/adminView';
+import SessionsView from '../sessionsView/sessionsView';
 
 import NavBar from '../../components/navBar/navBar';
 
@@ -120,6 +121,7 @@ export default function HomeView(props) {
             case 0:
                 return <InfoView ></InfoView>
             case 1:
+                return <SessionsView></SessionsView>
             case 2:
                 return <AdminView setVal={setVal} actualUser={actualUser}></AdminView>
             case 4:

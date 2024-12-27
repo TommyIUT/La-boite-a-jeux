@@ -1,0 +1,158 @@
+/* Conteneur principal */
+.sessionsView {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Bouton "+" */
+.add-session-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 28px;
+    background-color: #eb6534;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    z-index: 1000;
+}
+
+.add-session-button:hover {
+    transform: scale(1.1);
+}
+
+/* Liste des sessions */
+.session-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.session-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    width: 240px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.session-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.session-card h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.session-card p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+/* Formulaire de création */
+.create-session-form {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fdfdfd;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.create-session-form h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.create-session-form label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+}
+
+.create-session-form input {
+    width: 65%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.create-session-form button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.create-session-form button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+
+.create-session-form button[type="submit"]:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.create-session-form button[type="button"] {
+    background-color: #cccccc;
+    color: #333;
+}
+
+.create-session-form button[type="button"]:hover {
+    background-color: #aaaaaa;
+    transform: scale(1.05);
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .session-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .add-session-button {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+
+    .create-session-form {
+        padding: 15px;
+        width: 90%;
+    }
+
+    .session-card {
+        width: 90%;
+    }
+}
