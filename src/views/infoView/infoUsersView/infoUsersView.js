@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase';
 
@@ -6,9 +6,7 @@ import './infoUsersView.css';
 
 export default function InfoUsersView(props){
     const [users, setUsers] = useState([]);
-    const [vendeurs, setVendeurs] = useState([]);
     const [loading, setLoading] = useState(true);
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,14 +18,6 @@ export default function InfoUsersView(props){
                     data: doc.data(),
                 }));
                 setUsers(usersList);
-
-                // Récupération des vendeurs
-                const vendeursSnapshot = await getDocs(collection(db, "vendeurs"));
-                const vendeursList = vendeursSnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    data: doc.data(),
-                }));
-                setVendeurs(vendeursList);
             } catch (error) {
                 console.error("Erreur lors de la récupération des données :", error);
             } finally {
@@ -40,7 +30,7 @@ export default function InfoUsersView(props){
 
     const usersCount = users.length;
     const gestionnairesCount = users.filter(user => user.data['type'] === 'gestionnaire').length;
-    const vendeursCount = vendeurs.length;
+    const vendeursCount = users.reduce((total, user) => total + (user.data.vendeurs ? user.data.vendeurs.length : 0), 0);
 
     return (
         <div className="InfoUsersView">

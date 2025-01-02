@@ -6,6 +6,7 @@ import './infoSessionsView.css';
 export default function InfoSessionsView() {
     const [currentSession, setCurrentSession] = useState(null);
     const [error, setError] = useState('');
+    const [jeuxEnVente, setJeuxEnVente] = useState(0);
 
     useEffect(() => {
         const fetchCurrentSession = async () => {
@@ -34,7 +35,31 @@ export default function InfoSessionsView() {
             }
         };
 
+        const fetchJeuxEnVente = async () => {
+            try {
+                const usersSnapshot = await getDocs(collection(db, "users"));
+                let totalJeuxEnVente = 0;
+
+                usersSnapshot.forEach((doc) => {
+                    const user = doc.data();
+                    if (user.vendeurs) {
+                        user.vendeurs.forEach((vendeur) => {
+                            if (vendeur.listedepot) {
+                                totalJeuxEnVente += vendeur.listedepot.filter(depot => depot.situation === "vente").length;
+                            }
+                        });
+                    }
+                });
+
+                setJeuxEnVente(totalJeuxEnVente);
+            } catch (error) {
+                console.error("Error fetching jeux en vente:", error);
+                setError('Impossible de récupérer les jeux en vente.');
+            }
+        };
+
         fetchCurrentSession();
+        fetchJeuxEnVente();
     }, []);
 
     return (
@@ -47,7 +72,8 @@ export default function InfoSessionsView() {
                     <p><strong>Fin :</strong> {new Date(currentSession.fin.seconds * 1000).toLocaleString()}</p>
                     <p><strong>Pourcentage de frais de dépôt :</strong> {currentSession.frais_depot} %</p>
                     <p><strong>Taux de commission :</strong> {currentSession.t_commission} %</p>
-                    {/*Mettre boutons pour proposer de vendre ou acheter*/}
+                    <p><strong>Nombre de jeux en vente :</strong> {jeuxEnVente}</p>
+                    {/* Mettre boutons pour proposer de vendre ou acheter */}
                 </div>
             ) : (
                 <div>
