@@ -81,7 +81,7 @@ export default function NavBar({ actualUser, setVal }) {
                   onClick={handleLogout}
                   sx={{
                       position: 'relative',
-                      left: '40vw',
+                      left: '37vw',
                       color: 'rgb(235, 101, 52)',
                       '&:hover': { color: 'black' },
                   }}
