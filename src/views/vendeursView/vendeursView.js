@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import VendeurView from './vendeurView/vendeurView';
 
@@ -21,15 +21,14 @@ export default function VendeursView({ setVal, actualUser }) {
 
     const fetchVendeurs = async () => {
         try {
-            const querySnapshot = await getDocs(collection(db, "vendeurs"));
-            const fetchedVendeurs = querySnapshot.docs.map(doc => {
-                const data = doc.data();
-                return {
-                    id: doc.id,
-                    ...data,
-                };
-            });
-            setVendeurs(fetchedVendeurs);
+            const userDocRef = doc(db, "users", actualUser.id);
+            const userDocSnapshot = await getDoc(userDocRef);
+            if (userDocSnapshot.exists()) {
+                const userData = userDocSnapshot.data();
+                setVendeurs(userData.vendeurs || []);
+            } else {
+                console.error("Utilisateur introuvable");
+            }
         } catch (error) {
             console.error("Erreur lors de la récupération des vendeurs :", error);
         }
@@ -37,7 +36,7 @@ export default function VendeursView({ setVal, actualUser }) {
 
     useEffect(() => {
         fetchVendeurs();
-    }, []);
+    }, [actualUser]);
 
     const handleCardClick = (vendeurId) => {
         setIsCreating(false);
@@ -51,8 +50,10 @@ export default function VendeursView({ setVal, actualUser }) {
 
     const handleCreateVendeur = async () => {
         try {
-            const docRef = await addDoc(collection(db, "vendeurs"), newVendeur);
-            console.log("Nouveau vendeur ajouté avec ID :", docRef.id);
+            const userDocRef = doc(db, "users", actualUser.id);
+            const updatedVendeurs = [...vendeurs, newVendeur];
+            await updateDoc(userDocRef, { vendeurs: updatedVendeurs });
+            console.log("Nouveau vendeur ajouté");
 
             // Réinitialisation du formulaire
             setIsCreating(false);
@@ -67,7 +68,7 @@ export default function VendeursView({ setVal, actualUser }) {
             });
 
             // Rafraîchir la liste des vendeurs
-            fetchVendeurs();
+            setVendeurs(updatedVendeurs);
         } catch (error) {
             console.error("Erreur lors de la création du vendeur :", error);
         }
@@ -81,23 +82,19 @@ export default function VendeursView({ setVal, actualUser }) {
                 setSelectedVendeurId(null);
             }} title="Ajouter un vendeur">+</button>
             <div className="vendeur-list">
-                {vendeurs.map(vendeur => (
+                {vendeurs.map((vendeur, index) => (
                     <div
-                        key={vendeur.id}
+                        key={index}
                         className="vendeur-card"
-                        onClick={() => handleCardClick(vendeur.id)}
+                        onClick={() => handleCardClick(index)}
                     >
                         <h3>{vendeur.nom} {vendeur.prenom}</h3>
                         <p><strong>Email :</strong> {vendeur.mail}</p>
-                        <p><strong>Téléphone :</strong> {vendeur.telephone}</p>
-                        <p><strong>Gains :</strong> {vendeur.gains} €</p>
-                        <p><strong>À encaisser :</strong> {vendeur.a_encaisser} €</p>
-                        <p><strong>Dépôts: </strong> {vendeur.listedepot.length}</p>
                     </div>
                 ))}
             </div>
-            {selectedVendeurId && (
-                <VendeurView vendeurId={selectedVendeurId} setSelectedVendeurId={setSelectedVendeurId} refreshVendeurs={fetchVendeurs} />
+            {selectedVendeurId !== null && (
+                <VendeurView vendeurId={selectedVendeurId} setSelectedVendeurId={setSelectedVendeurId} refreshVendeurs={fetchVendeurs} actualUser={actualUser} />
             )}
 
             {isCreating && (

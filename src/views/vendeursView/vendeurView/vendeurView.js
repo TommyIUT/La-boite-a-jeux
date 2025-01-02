@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { doc, deleteDoc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import DepotView from '../depotView/depotView';
 
 import './vendeurView.css';
 
-export default function VendeurView({ vendeurId, setSelectedVendeurId, refreshVendeurs }) {
+export default function VendeurView({ vendeurId, setSelectedVendeurId, refreshVendeurs, actualUser }) {
     const [vendeur, setVendeur] = useState(null);
+    const [isManagingDepots, setIsManagingDepots] = useState(false);
 
     useEffect(() => {
         const fetchVendeur = async () => {
             try {
-                const vendeurRef = doc(db, "vendeurs", vendeurId);
-                const vendeurSnapshot = await getDoc(vendeurRef);
-                if (vendeurSnapshot.exists()) {
-                    const data = vendeurSnapshot.data();
-                    setVendeur(data);
+                const userDocRef = doc(db, "users", actualUser.id);
+                const userDocSnapshot = await getDoc(userDocRef);
+                if (userDocSnapshot.exists()) {
+                    const userData = userDocSnapshot.data();
+                    const selectedVendeur = userData.vendeurs[vendeurId];
+                    setVendeur(selectedVendeur);
                 } else {
                     console.error("Vendeur introuvable");
                 }
@@ -23,20 +26,24 @@ export default function VendeurView({ vendeurId, setSelectedVendeurId, refreshVe
             }
         };
 
-        if (vendeurId) {
+        if (vendeurId !== null) {
             fetchVendeur();
         }
-    }, [vendeurId]);
+    }, [vendeurId, actualUser]);
 
     const handleDelete = async () => {
         try {
-            const confirmSave = window.confirm("Êtes-vous sûr de bien vouloir supprimer ce vendeur ?");
-            const vendeurRef = doc(db, "vendeurs", vendeurId);
-            if (confirmSave){
-                await deleteDoc(vendeurRef);
+            const userDocRef = doc(db, "users", actualUser.id);
+            const userDocSnapshot = await getDoc(userDocRef);
+            if (userDocSnapshot.exists()) {
+                const userData = userDocSnapshot.data();
+                const updatedVendeurs = userData.vendeurs.filter((_, index) => index !== vendeurId);
+                await updateDoc(userDocRef, { vendeurs: updatedVendeurs });
                 console.log("Vendeur supprimé !");
                 setSelectedVendeurId(null);
                 refreshVendeurs(); // Rafraîchir la liste des vendeurs
+            } else {
+                console.error("Utilisateur introuvable");
             }
         } catch (error) {
             console.error("Erreur lors de la suppression :", error);
@@ -60,7 +67,11 @@ export default function VendeurView({ vendeurId, setSelectedVendeurId, refreshVe
             </div>
             <div className="vendeur-actions">
                 <button onClick={handleDelete} className="btn delete">Supprimer</button>
+                <button onClick={() => setIsManagingDepots(true)} className="btn manage">Gérer dépôts</button>
             </div>
+            {isManagingDepots && (
+                <DepotView vendeurId={vendeurId} setIsManagingDepots={setIsManagingDepots} refreshVendeurs={refreshVendeurs} actualUser={actualUser} />
+            )}
         </div>
     );
 }
