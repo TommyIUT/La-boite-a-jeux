@@ -7,6 +7,7 @@ import ProfileView from '../profileView/profileView';
 import AdminView from '../adminView/adminView';
 import SessionsView from '../sessionsView/sessionsView';
 import VendeursView from '../vendeursView/vendeursView';
+import RechercheView from '../rechercheView/rechercheView';
 
 import NavBar from '../../components/navBar/navBar';
 
@@ -63,7 +64,7 @@ export default function HomeView(props) {
             case 5:
                 return <ProfileView setVal={setVal} actualUser={actualUser} setActualUser={setActualUser} />;
             case 6:
-                return <AdminView setVal={setVal} />;
+                return <RechercheView setVal={setVal} />;
             default:
                 return (
                     <InfoView ></InfoView>
