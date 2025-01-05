@@ -8,6 +8,7 @@ import AdminView from '../adminView/adminView';
 import SessionsView from '../sessionsView/sessionsView';
 import VendeursView from '../vendeursView/vendeursView';
 import RechercheView from '../rechercheView/rechercheView';
+import CommandesView from '../commandesView/commandesView';
 
 import NavBar from '../../components/navBar/navBar';
 
@@ -65,6 +66,8 @@ export default function HomeView(props) {
                 return <ProfileView setVal={setVal} actualUser={actualUser} setActualUser={setActualUser} />;
             case 6:
                 return <RechercheView setVal={setVal} actualUser={actualUser}/>;
+            case 7:
+                return <CommandesView setVal={setVal} actualUser={actualUser}></CommandesView>
             default:
                 return (
                     <InfoView ></InfoView>
