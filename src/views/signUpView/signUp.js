@@ -61,7 +61,8 @@ export default function SignUp(props){
                     type: 'rien',
                     a_encaisser: 0,
                     gains:0,
-                    vendeurs: []
+                    vendeurs: [],
+                    commandes: []
                 };
                 // const { pw, ...localUser } = user; 
                 await setDoc(userDocRef, user);

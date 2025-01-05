@@ -1,43 +1,29 @@
 /* Conteneur principal */
 .rechercheView {
-    max-width: 800px;
-    margin: 20px auto;
     padding: 20px;
-    background: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* Titre */
 .rechercheView h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #333;
 }
 
+/* Champ de saisie */
 .rechercheView input {
-    width: 100%;
+    width: 60%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
-    margin-bottom: 10px;
+    margin-bottom: 20px; /* Ajout de margin entre le champ de saisie et les résultats */
 }
 
-.rechercheView button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    background-color: #007bff;
-    color: white;
-}
-
-.rechercheView button:hover {
-    background-color: #0056b3;
-}
-
+/* Liste des jeux */
 .jeux-list {
     display: flex;
     flex-wrap: wrap;
@@ -71,6 +57,25 @@
     font-size: 14px;
     color: #555;
     margin: 5px 0;
+}
+
+/* Bouton Acheter */
+.jeu-card .btn.acheter {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #eb6534;
+    color: white;
+    margin-top: 10px;
+}
+
+.jeu-card .btn.acheter:hover {
+    background-color: #d35d3a;
+    transform: scale(1.05);
 }
 
 /* Responsive design */
