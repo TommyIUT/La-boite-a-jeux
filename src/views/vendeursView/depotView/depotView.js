@@ -33,7 +33,6 @@ export default function DepotView({ vendeurId, setIsManagingDepots, refreshVende
                 console.error("Erreur lors de la récupération des dépôts :", error);
             }
         };
-
         const fetchSessionEnCours = async () => {
             try {
                 const sessionsSnapshot = await getDocs(collection(db, "session"));
@@ -50,9 +49,11 @@ export default function DepotView({ vendeurId, setIsManagingDepots, refreshVende
             }
         };
 
-        fetchDepots();
         fetchSessionEnCours();
+        fetchDepots();
     }, [vendeurId, actualUser]);
+
+    
 
     const handleNewDepotChange = (e) => {
         const { name, value } = e.target;
@@ -77,7 +78,6 @@ export default function DepotView({ vendeurId, setIsManagingDepots, refreshVende
                 await updateDoc(userDocRef, { vendeurs: updatedVendeurs });
                 console.log("Nouveau dépôt ajouté");
 
-                // Réinitialisation du formulaire
                 setIsCreatingDepot(false);
                 setNewDepot({
                     nom_jeu: "",
@@ -87,8 +87,6 @@ export default function DepotView({ vendeurId, setIsManagingDepots, refreshVende
                     situation: "stock",
                     date_vente: null,
                 });
-
-                // Rafraîchir la liste des dépôts
                 setDepots([...depots, newDepot]);
             } else {
                 console.error("Utilisateur introuvable");
@@ -97,6 +95,46 @@ export default function DepotView({ vendeurId, setIsManagingDepots, refreshVende
             console.error("Erreur lors de la création du dépôt :", error);
         }
     };
+
+    const handleRembourseDepot = async (index) => {
+        try {
+            const userDocRef = doc(db, "users", actualUser.id);
+            const userDocSnapshot = await getDoc(userDocRef);
+            if (userDocSnapshot.exists()) {
+                const userData = userDocSnapshot.data();
+                const selectedVendeur = userData.vendeurs[vendeurId];
+                const depot = selectedVendeur.listedepot[index];
+    
+                if (depot.situation !== "vendu") {
+                    console.error("Le dépôt n'est pas vendu, remboursement impossible.");
+                    return;
+                }
+    
+                // Mise à jour de la situation du dépôt
+                depot.situation = "remboursé";
+    
+                // Calcul des nouveaux montants
+                const valeurDepot = parseFloat(depot.valeur);
+                selectedVendeur.gains = (selectedVendeur.gains || 0) + valeurDepot;
+                selectedVendeur.a_encaisser = (selectedVendeur.a_encaisser || 0) - valeurDepot;
+    
+                // Mise à jour dans la base de données
+                await updateDoc(userDocRef, {
+                    vendeurs: userData.vendeurs
+                });
+    
+                console.log("Dépôt remboursé :", depot);
+    
+                // Mise à jour de l'état local
+                setDepots([...selectedVendeur.listedepot]);
+            } else {
+                console.error("Utilisateur introuvable");
+            }
+        } catch (error) {
+            console.error("Erreur lors du remboursement du dépôt :", error);
+        }
+    };
+    
 
     const handleSellDepot = async (index) => {
         try {
@@ -107,33 +145,27 @@ export default function DepotView({ vendeurId, setIsManagingDepots, refreshVende
                 const selectedVendeur = userData.vendeurs[vendeurId];
                 const depot = selectedVendeur.listedepot[index];
 
-                // Vérifier s'il y a une session en cours
                 if (!sessionEnCours) {
                     alert("Aucune session en cours. Impossible de mettre en vente.");
                     return;
                 }
 
-                // Calculer le prix TTC
                 const frais_depot = sessionEnCours.frais_depot || 0;
                 const commissions = sessionEnCours.t_commission || 0;
                 const prix_ttc = parseFloat(depot.valeur) + (parseFloat(depot.valeur) * (frais_depot / 100)) + (parseFloat(depot.valeur) * (commissions / 100));
 
-                // Mettre à jour le dépôt
                 depot.prix_ttc = prix_ttc;
                 depot.situation = "vente";
                 depot.date_vente = new Date().toISOString();
 
-                // Mettre à jour les frais de dépôt et de commission
-                userData.a_encaisser += parseFloat(frais_depot / 100) * parseFloat(depot.valeur);
-                sessionEnCours.commissions += parseFloat(commissions / 100) * parseFloat(depot.valeur);
+                userData.a_encaisser = (userData.a_encaisser || 0) + parseFloat(frais_depot / 100) * parseFloat(depot.valeur);
+                sessionEnCours.commissions = (sessionEnCours.commissions || 0) + parseFloat(commissions / 100) * parseFloat(depot.valeur);
 
-                // Mettre à jour le document utilisateur
                 await updateDoc(userDocRef, {
                     vendeurs: userData.vendeurs,
                     a_encaisser: userData.a_encaisser
                 });
 
-                // Mettre à jour la session
                 const sessionDocRef = doc(db, "session", sessionEnCours.id);
                 await updateDoc(sessionDocRef, {
                     commissions: sessionEnCours.commissions
@@ -141,7 +173,6 @@ export default function DepotView({ vendeurId, setIsManagingDepots, refreshVende
 
                 console.log("Dépôt mis en vente :", depot);
 
-                // Rafraîchir la liste des dépôts
                 setDepots(selectedVendeur.listedepot);
             } else {
                 console.error("Utilisateur introuvable");
@@ -187,11 +218,14 @@ export default function DepotView({ vendeurId, setIsManagingDepots, refreshVende
                         <p><strong>État :</strong> {depot.etat}</p>
                         <p><strong>Valeur (€) :</strong> {depot.valeur}</p>
                         <p><strong>Situation :</strong> {depot.situation}</p>
-                        {depot.situation === "stock" && (
-                            <button onClick={() => handleSellDepot(index)} className="btn sell">Mettre en vente</button>
+                        {depot.situation === "vendu" && (
+                            <button onClick={() => handleRembourseDepot(index)} className="btn refund">Rembourser</button>
                         )}
                         {depot.situation === "stock" && (
-                            <button onClick={() => handleDeleteDepot(index)} className="btn delete">Supprimer</button>
+                            <>
+                                <button onClick={() => handleSellDepot(index)} className="btn sell">Mettre en vente</button>
+                                <button onClick={() => handleDeleteDepot(index)} className="btn delete">Supprimer</button>
+                            </>
                         )}
                     </div>
                 ))}
@@ -201,26 +235,11 @@ export default function DepotView({ vendeurId, setIsManagingDepots, refreshVende
                 <div className="create-depot-form">
                     <h2>Créer un nouveau dépôt</h2>
                     <label>Nom du jeu :</label>
-                    <input
-                        type="text"
-                        name="nom_jeu"
-                        value={newDepot.nom_jeu}
-                        onChange={handleNewDepotChange}
-                    />
+                    <input type="text" name="nom_jeu" value={newDepot.nom_jeu} onChange={handleNewDepotChange} />
                     <label>État :</label>
-                    <input
-                        type="text"
-                        name="etat"
-                        value={newDepot.etat}
-                        onChange={handleNewDepotChange}
-                    />
+                    <input type="text" name="etat" value={newDepot.etat} onChange={handleNewDepotChange} />
                     <label>Valeur (€) :</label>
-                    <input
-                        type="text"
-                        name="valeur"
-                        value={newDepot.valeur}
-                        onChange={handleNewDepotChange}
-                    />
+                    <input type="text" name="valeur" value={newDepot.valeur} onChange={handleNewDepotChange} />
                     <button onClick={handleCreateDepot}>Ajouter</button>
                     <button onClick={() => setIsCreatingDepot(false)}>Annuler</button>
                 </div>
