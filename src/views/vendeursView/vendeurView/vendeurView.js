@@ -9,27 +9,63 @@ export default function VendeurView({ vendeurId, setSelectedVendeurId, refreshVe
     const [vendeur, setVendeur] = useState(null);
     const [isManagingDepots, setIsManagingDepots] = useState(false);
 
-    useEffect(() => {
-        const fetchVendeur = async () => {
-            try {
-                const userDocRef = doc(db, "users", actualUser.id);
-                const userDocSnapshot = await getDoc(userDocRef);
-                if (userDocSnapshot.exists()) {
-                    const userData = userDocSnapshot.data();
-                    const selectedVendeur = userData.vendeurs[vendeurId];
-                    setVendeur(selectedVendeur);
-                } else {
-                    console.error("Vendeur introuvable");
-                }
-            } catch (error) {
-                console.error("Erreur lors de la récupération du vendeur :", error);
+    const fetchVendeur = async () => {
+        try {
+            const userDocRef = doc(db, "users", actualUser.id);
+            const userDocSnapshot = await getDoc(userDocRef);
+            if (userDocSnapshot.exists()) {
+                const userData = userDocSnapshot.data();
+                const selectedVendeur = userData.vendeurs[vendeurId];
+                setVendeur(selectedVendeur);
+            } else {
+                console.error("Vendeur introuvable");
             }
-        };
+        } catch (error) {
+            console.error("Erreur lors de la récupération du vendeur :", error);
+        }
+    };
 
+    useEffect(() => {
         if (vendeurId !== null) {
             fetchVendeur();
         }
     }, [vendeurId, actualUser]);
+
+    const handleRembourseDepot = async (index) => {
+        try {
+            const userDocRef = doc(db, "users", actualUser.id);
+            const userDocSnapshot = await getDoc(userDocRef);
+            if (userDocSnapshot.exists()) {
+                const userData = userDocSnapshot.data();
+                const selectedVendeur = userData.vendeurs[vendeurId];
+                const depot = selectedVendeur.listedepot[index];
+
+                if (depot.situation !== "vendu") {
+                    console.error("Le dépôt n'est pas vendu, remboursement impossible.");
+                    return;
+                }
+
+                depot.situation = "remboursé";
+
+                const valeurDepot = parseFloat(depot.valeur);
+                selectedVendeur.gains = (selectedVendeur.gains || 0) + valeurDepot;
+                selectedVendeur.a_encaisser = (selectedVendeur.a_encaisser || 0) - valeurDepot;
+
+                await updateDoc(userDocRef, {
+                    vendeurs: userData.vendeurs
+                });
+
+                console.log("Dépôt remboursé :", depot);
+
+                // Rafraîchir les données du vendeur après mise à jour
+                fetchVendeur();
+            } else {
+                console.error("Utilisateur introuvable");
+            }
+        } catch (error) {
+            console.error("Erreur lors du remboursement du dépôt :", error);
+        }
+    };
 
     const handleDelete = async () => {
         try {
@@ -41,7 +77,7 @@ export default function VendeurView({ vendeurId, setSelectedVendeurId, refreshVe
                 await updateDoc(userDocRef, { vendeurs: updatedVendeurs });
                 console.log("Vendeur supprimé !");
                 setSelectedVendeurId(null);
-                refreshVendeurs(); // Rafraîchir la liste des vendeurs
+                refreshVendeurs();
             } else {
                 console.error("Utilisateur introuvable");
             }
@@ -70,7 +106,12 @@ export default function VendeurView({ vendeurId, setSelectedVendeurId, refreshVe
                 <button onClick={() => setIsManagingDepots(true)} className="btn manage">Gérer dépôts</button>
             </div>
             {isManagingDepots && (
-                <DepotView vendeurId={vendeurId} setIsManagingDepots={setIsManagingDepots} refreshVendeurs={refreshVendeurs} actualUser={actualUser} />
+                <DepotView
+                    vendeurId={vendeurId}
+                    setIsManagingDepots={setIsManagingDepots}
+                    refreshVendeurs={refreshVendeurs}
+                    actualUser={actualUser}
+                />
             )}
         </div>
     );

@@ -18,15 +18,18 @@ export default function RechercheView({ actualUser }) {
             usersSnapshot.forEach((userDoc) => {
                 const user = userDoc.data();
                 if (user.vendeurs) {
-                    user.vendeurs.forEach((vendeur) => {
+                    user.vendeurs.forEach((vendeur, vendeurIndex) => {
                         if (vendeur.listedepot) {
-                            vendeur.listedepot.forEach((depot, index) => {
-                                if (searchTerm.trim() === '' || depot.nom_jeu.toLowerCase().includes(searchTerm.toLowerCase())) {
+                            vendeur.listedepot.forEach((depot, depotIndex) => {
+                                if (
+                                    searchTerm.trim() === '' ||
+                                    depot.nom_jeu.toLowerCase().includes(searchTerm.toLowerCase())
+                                ) {
                                     jeuxList.push({
                                         ...depot,
-                                        docId: userDoc.id, // Identifiant du document Firebase
-                                        vendeurId: vendeur.id,
-                                        depotIndex: index, // Index pour localiser le dépôt
+                                        docId: userDoc.id, // ID du document Firebase
+                                        vendeurIndex, // Index du vendeur dans le tableau
+                                        depotIndex, // Index du dépôt dans le tableau
                                     });
                                 }
                             });
@@ -36,8 +39,11 @@ export default function RechercheView({ actualUser }) {
             });
     
             const filteredJeux = jeuxList.filter(
-                (jeu) => jeu.situation === 'vente' && !commandes.some((commande) => commande.id_jeu === jeu.docId)
+                (jeu) =>
+                    jeu.situation === 'vente' &&
+                    !commandes.some((commande) => commande.id_jeu === jeu.docId)
             );
+    
             setJeux(filteredJeux);
         } catch (error) {
             console.error('Erreur lors de la recherche des jeux :', error);
@@ -45,6 +51,7 @@ export default function RechercheView({ actualUser }) {
             setLoading(false);
         }
     };
+    
     
     useEffect(() => {
         const fetchCommandes = async () => {
@@ -57,10 +64,11 @@ export default function RechercheView({ actualUser }) {
                 console.error('Erreur lors de la récupération des commandes :', error);
             }
         };
-
+    
         fetchCommandes();
         handleSearch();
     }, [searchTerm, actualUser]);
+    
 
     const handleAcheter = async (jeu) => {
         try {
@@ -73,14 +81,13 @@ export default function RechercheView({ actualUser }) {
             }
     
             const gestionnaireData = gestionnaireDocSnapshot.data();
-            const vendeurIndex = gestionnaireData.vendeurs.findIndex((v) => v.id === jeu.vendeurId);
+            const vendeur = gestionnaireData.vendeurs[jeu.vendeurIndex];
     
-            if (vendeurIndex === -1) {
-                console.error('Vendeur introuvable');
+            if (!vendeur) {
+                console.error('Vendeur introuvable via l\'index');
                 return;
             }
     
-            const vendeur = gestionnaireData.vendeurs[vendeurIndex];
             const depot = vendeur.listedepot[jeu.depotIndex];
     
             if (!depot || depot.situation !== 'vente') {
@@ -93,9 +100,11 @@ export default function RechercheView({ actualUser }) {
             depot.date_vente = new Date().toISOString();
             vendeur.a_encaisser = (vendeur.a_encaisser || 0) + parseFloat(depot.valeur || 0);
     
-            gestionnaireData.vendeurs[vendeurIndex].listedepot[jeu.depotIndex] = depot;
+            // Mise à jour des données du gestionnaire
+            gestionnaireData.vendeurs[jeu.vendeurIndex].listedepot[jeu.depotIndex] = depot;
             await updateDoc(gestionnaireDocRef, { vendeurs: gestionnaireData.vendeurs });
     
+            // Mise à jour des commandes de l'acheteur
             const acheteurDocRef = doc(db, 'users', actualUser.id);
             const acheteurDocSnapshot = await getDoc(acheteurDocRef);
     
@@ -108,7 +117,7 @@ export default function RechercheView({ actualUser }) {
             const commandes = acheteurData.commandes || [];
     
             commandes.push({
-                id_jeu: jeu.docId, // Utilisation de l'identifiant du document
+                id_jeu: jeu.docId, // Utilisation de l'identifiant du document gestionnaire
                 nom_jeu: depot.nom_jeu,
                 prix_ttc: depot.prix_ttc,
                 etat: depot.etat,
@@ -116,12 +125,14 @@ export default function RechercheView({ actualUser }) {
             });
     
             await updateDoc(acheteurDocRef, { commandes });
+    
             console.log(`Le jeu "${depot.nom_jeu}" a été acheté avec succès !`);
-            handleSearch();
+            handleSearch(); // Recharge les jeux disponibles après achat
         } catch (error) {
             console.error('Erreur lors de l\'achat du jeu :', error);
         }
     };
+    
     
 
     return (
