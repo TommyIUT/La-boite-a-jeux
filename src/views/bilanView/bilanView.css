@@ -1,0 +1,124 @@
+/* Conteneur principal */
+.bilanView {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh; /* Ajuste la hauteur pour centrer verticalement */
+    box-sizing: border-box;
+}
+
+/* Titre principal */
+.bilanView h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
+}
+
+/* Section du bilan gestionnaire */
+.gestionnaire-bilan {
+    border: 1px solid #ccc;
+    width: 40vw; /* Réduction de la largeur */
+    border-radius: 8px;
+    padding: 15px; /* Réduction du padding */
+    margin-bottom: 20px; /* Moins d'espace entre les sections */
+    background: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.gestionnaire-bilan p {
+    font-size: 14px; /* Réduction de la taille du texte */
+    color: #555;
+    margin: 5px 0;
+}
+
+.gestionnaire-bilan strong {
+    color: #333;
+}
+
+/* Liste des vendeurs */
+.vendeurs-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Moins d'espace entre les cartes */
+    justify-content: center;
+    align-items: center; /* Centré verticalement si nécessaire */
+    width: 100%;
+}
+
+/* Carte vendeur */
+.vendeur-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px; /* Réduction du padding */
+    cursor: pointer;
+    width: 200px; /* Réduction de la largeur */
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+}
+
+.vendeur-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.vendeur-card h4 {
+    font-size: 16px; /* Réduction de la taille du titre */
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* Section des détails du vendeur */
+.vendeur-details {
+    margin-top: 20px; /* Moins d'espace au-dessus */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px; /* Réduction du padding */
+    background: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    width: 40vw; /* Aligné avec le bilan gestionnaire */
+    text-align: center;
+}
+
+.vendeur-details h3 {
+    font-size: 18px; /* Réduction de la taille du titre */
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.vendeur-details p {
+    font-size: 14px; /* Réduction de la taille du texte */
+    color: #555;
+    margin: 5px 0;
+}
+
+.vendeur-details strong {
+    color: #333;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .gestionnaire-bilan, .vendeur-details {
+        width: 80%; /* Plus large sur les petits écrans */
+        padding: 10px;
+    }
+
+    .vendeurs-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .vendeur-card {
+        width: 90%; /* Cartes pleine largeur sur mobile */
+    }
+}

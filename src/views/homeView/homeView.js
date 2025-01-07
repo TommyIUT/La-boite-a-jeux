@@ -9,6 +9,7 @@ import SessionsView from '../sessionsView/sessionsView';
 import VendeursView from '../vendeursView/vendeursView';
 import RechercheView from '../rechercheView/rechercheView';
 import CommandesView from '../commandesView/commandesView';
+import BilanView from '../bilanView/bilanView';
 
 import NavBar from '../../components/navBar/navBar';
 
@@ -60,6 +61,8 @@ export default function HomeView(props) {
                 return <SessionsView></SessionsView>
             case 2:
                 return <AdminView setVal={setVal} actualUser={actualUser}></AdminView>
+            case 3:
+                return <BilanView setVal={setVal} actualUser={actualUser}></BilanView>
             case 4:
                 return <VendeursView setVal={setVal} actualUser={actualUser}></VendeursView>
             case 5:

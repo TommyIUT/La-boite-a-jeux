@@ -53,7 +53,7 @@ export default function NavBar({ actualUser, setVal }) {
                       (
                         <div>
                             <NavLink className="current" to='/' onClick={() => setVal(4)}>Vendeurs</NavLink>
-                            <NavLink className="current" to='/' onClick={() => setVal(8)}>Bilan</NavLink>
+                            <NavLink className="current" to='/' onClick={() => setVal(3)}>Bilan</NavLink>
                         </div>
                         ) : (<div></div>)
                       }
