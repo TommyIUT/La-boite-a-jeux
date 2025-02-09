@@ -9,5 +9,7 @@ gestionnaire: pascal@mail.fr
 admin: tomphilippe24@yahoo.fr
 
 # MDP
-|| polytech123 ||
+<spoiler>
+The cake is a lie.
+</spoiler>
 Tout les comptes cités ont ce même mot de passe
