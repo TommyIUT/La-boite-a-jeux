@@ -10,6 +10,6 @@ admin: tomphilippe24@yahoo.fr
 
 # MDP
 <spoiler>
-The cake is a lie.
+polytech123
 </spoiler>
 Tout les comptes cités ont ce même mot de passe
